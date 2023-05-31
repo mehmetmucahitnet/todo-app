@@ -79,3 +79,48 @@ $lh-two: 27.6px;
   background-color: $back;
   height: 44px;
 }
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+body {
+  font-family: $font-family;
+  background-color: $back;
+  color: $dark;
+}
+
+button {
+  cursor: pointer;
+}
+
+.login {
+  &-container {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    width: calc(100% - 48px);
+
+    &__title {
+      @include h2;
+      color: $black;
+    }
+
+    & input {
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    & button {
+      width: 264px;
+      margin-top: 64px;
+    }
+  }
+}
