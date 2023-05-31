@@ -124,3 +124,184 @@ button {
     }
   }
 }
+
+.todo {
+  &-container {
+    padding: 56px;
+
+    & h1 {
+      @include h1;
+      color: $black;
+      margin-bottom: 40px;
+    }
+  }
+
+  &-list {
+    &-container {
+      position: relative;
+
+      & .add-todo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 256px;
+      }
+    }
+
+    &-day-item {
+      & h2 {
+        @include h2;
+        display: flex;
+        align-items: center;
+        grid-gap: 8px;
+        margin-bottom: 16px;
+
+        & i {
+          color: $purple;
+        }
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 40px;
+      }
+    }
+
+    &-item {
+      display: flex;
+      align-items: center;
+      max-width: 720px;
+      width: 100%;
+
+      & button {
+        color: $black;
+      }
+
+      & i {
+        height: 44px;
+        width: 44px;
+        display: grid;
+        place-items: center;
+        border: 1px solid $dark;
+        font-size: $fs-24;
+      }
+
+      &,
+      & input {
+        background-color: $white;
+      }
+
+      & input {
+        flex: 1;
+      }
+
+      & .check {
+        & i {
+          &::before {
+            opacity: 0;
+          }
+        }
+      }
+
+      & .delete {
+        &:hover {
+          color: $red;
+        }
+      }
+
+      & input {
+        pointer-events: none;
+      }
+
+      &.checked {
+        & .check {
+          & i {
+            &::before {
+              opacity: 1;
+            }
+          }
+        }
+
+        & .check,
+        & input {
+          color: $grey;
+        }
+      }
+
+      &.editing {
+        & input {
+          pointer-events: all;
+          box-shadow: $inner-shadow;
+        }
+      }
+    }
+  }
+}
+
+.add-todo-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $grey-50;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  &__form {
+    background-color: $white;
+    padding: 48px 40px 40px 48px;
+    max-width: 753px;
+    width: calc(100% - 48px);
+
+    &-inputs {
+      & table {
+        border-collapse: separate;
+        border-spacing: 0 32px;
+        width: 100%;
+
+        & th {
+          @include h2;
+          color: $dark;
+          width: 1%;
+          white-space: nowrap;
+          padding-right: 12px;
+        }
+
+        & input[type="text"] {
+          width: 100%;
+        }
+
+        & input[type="date"] {
+          position: relative;
+
+          &::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+          }
+
+          width: 149px;
+        }
+      }
+    }
+
+    &-buttons {
+      display: flex;
+      grid-gap: 48px;
+
+      & button {
+        flex: 1;
+      }
+    }
+  }
+}
