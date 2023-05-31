@@ -305,3 +305,42 @@ button {
     }
   }
 }
+
+@media (max-width: 1096px) {
+  .login {
+    &-form {
+      & button {
+        width: 100%;
+        margin-top: 32px;
+      }
+    }
+  }
+
+  .todo {
+    &-container {
+      padding: 24px;
+    }
+
+    &-list {
+      &-container {
+        & .add-todo {
+          position: sticky;
+          width: 100%;
+          border-radius: 0;
+        }
+      }
+
+      &-day-item {
+        &:first-of-type {
+          margin-top: 40px;
+        }
+      }
+
+      &-item {
+        & input {
+          width: inherit;
+        }
+      }
+    }
+  }
+}
