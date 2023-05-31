@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "icon";
+  src: url("../fonts/icon.woff?rert98") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  font-family: "icon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-check:before {
+  content: "\e901";
+}
+.icon-calendar:before {
+  content: "\e900";
+}
+.icon-pen:before {
+  content: "\e902";
+}
+.icon-trash:before {
+  content: "\e903";
+}

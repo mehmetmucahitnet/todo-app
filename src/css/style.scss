@@ -1,0 +1,81 @@
+@use "reset";
+
+// COLORS
+$black: #000000;
+$dark: #272727;
+$white: #ffffff;
+$purple: #800080;
+$red: #b70000;
+$grey: #7e7a7a;
+$grey-50: rgba($grey, 0.5);
+$back: #d0cad9;
+
+// BOX SHADOWS
+$shadow-1: 4px 4px 16px rgba($dark, 0.25), inset -4px -4px 16px rgba($dark, 0.1),
+  inset 4px 4px 16px rgba($dark, 0.07);
+$shadow-2: 4px 4px 16px rgba($dark, 0.1);
+$inner-shadow: inset -4px -4px 16px rgba($dark, 0.15),
+  inset 4px 4px 16px rgba($dark, 0.15);
+
+// BORDER RADIUS
+$br-4: 4px;
+
+// TYPOGRAPHY
+$font-family: "Arial", sans-serif;
+
+// FONT SIZES
+$fs-36: 36px;
+$fs-24: 24px;
+
+// FONT WEIGHTS
+$fw-700: 700;
+$fw-400: 400;
+
+// LINE HEIGHTS
+$lh-one: 41.4px;
+$lh-two: 27.6px;
+
+// MIXINS
+@mixin h1 {
+  font-size: $fs-36;
+  font-weight: $fw-700;
+  color: $black;
+  line-height: $lh-one;
+}
+
+@mixin h2 {
+  font-size: $fs-24;
+  font-weight: $fw-700;
+  color: $black;
+  line-height: $lh-two;
+}
+
+@mixin t1 {
+  font-size: $fs-24;
+  font-weight: $fw-400;
+  color: $black;
+  line-height: $lh-two;
+}
+
+// COMPONENTS
+.button {
+  @include h2;
+  padding: 8px;
+  color: $white;
+  box-shadow: $shadow-1;
+  border-radius: $br-4;
+  background-color: $purple;
+  text-align: center;
+
+  &--grey {
+    background-color: $grey;
+  }
+}
+
+.input {
+  @include t1;
+  padding: 9px 10px 5px 10px;
+  border: 1px solid $dark;
+  background-color: $back;
+  height: 44px;
+}
