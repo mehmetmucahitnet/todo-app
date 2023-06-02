@@ -1,6 +1,5 @@
 const loginForm = document.querySelector(".login-form");
 let users = JSON.parse(localStorage.getItem("users")) || [];
-const currentUser = JSON.parse(localStorage.getItem("user"));
 
 if (loginForm) {
   loginForm.addEventListener("submit", (event) => {
@@ -15,7 +14,7 @@ if (loginForm) {
     const existingUser = users.find((user) => user.username === usernameInput);
 
     if (existingUser) {
-      localStorage.setItem("user", JSON.stringify(currentUser));
+      localStorage.setItem("user", JSON.stringify(existingUser.username));
     } else {
       const newUser = {
         username: usernameInput,

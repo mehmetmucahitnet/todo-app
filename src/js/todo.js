@@ -11,16 +11,24 @@ window.onload = () => {
   if (!currentUser) {
     window.location.href = "index.html";
   } else {
-    const userr = users.find((user) => user.username === currentUser);
-    console.log(userr, currentUser);
-    const userTodos = userr.todos;
-    console.log(userTodos);
+    const user = users.find((user) => user.username === currentUser);
+
+    const userTodos = user.todos;
     listTodos(userTodos);
+
+    const todoListItemCheck = document.querySelectorAll(
+      ".todo-list-item .check"
+    );
+
+    if (todoListItemCheck) {
+      todoListItemCheck.forEach((todo) => {
+        todo.addEventListener("click", (e) => {
+          checkTodo(e);
+        });
+      });
+    }
   }
 };
-
-// let todos = currentUser.todos || [];
-// currentUser.todos = todos;
 
 if (addTodoButton) {
   addTodoButton.addEventListener("click", () => {
@@ -126,9 +134,19 @@ function listTodos(todos) {
       }
     }
   });
+}
 
-  // for (let i = 0; i < todos.length; i++) {
-  //   const todo = todos[i];
+function checkTodo(e) {
+  const todoId = e.target.parentElement.id;
 
-  // }
+  const user = users.find((user) => user.username === currentUser);
+  const userTodos = user.todos;
+  console.log(userTodos);
+
+  const todo = userTodos.find((todo) => todoId == `todo${todo.id}`);
+  e.target.parentElement.classList.toggle("checked");
+
+  console.log(todo);
+  todo.checked = !todo.checked;
+  localStorage.setItem("users", JSON.stringify(users));
 }
