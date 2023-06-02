@@ -210,7 +210,7 @@ button {
       }
 
       & .edit {
-        &.editing {
+        &.active {
           & i {
             &::before {
               content: "\e901";

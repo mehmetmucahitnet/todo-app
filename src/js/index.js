@@ -6,7 +6,7 @@ if (loginForm) {
     event.preventDefault();
     const usernameInput = document.querySelector("#usernameInput").value.trim();
 
-    if (usernameInput === "") {
+    if (usernameInput.length == 0) {
       alert("Username cannot be empty");
       return;
     }

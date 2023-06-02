@@ -6,6 +6,15 @@ const addTodoModalForm = document.querySelector(".add-todo-modal__form");
 const todoListContainer = document.querySelector(".todo-list-container");
 const users = JSON.parse(localStorage.getItem("users"));
 const currentUser = JSON.parse(localStorage.getItem("user"));
+const todoListItemCheck = document.querySelectorAll(".todo-list-item .check");
+
+if (todoListItemCheck) {
+  todoListItemCheck.forEach((todo) => {
+    todo.addEventListener("click", (e) => {
+      checkTodo(e);
+    });
+  });
+}
 
 window.onload = () => {
   if (!currentUser) {
@@ -15,18 +24,6 @@ window.onload = () => {
 
     const userTodos = user.todos;
     listTodos(userTodos);
-
-    const todoListItemCheck = document.querySelectorAll(
-      ".todo-list-item .check"
-    );
-
-    if (todoListItemCheck) {
-      todoListItemCheck.forEach((todo) => {
-        todo.addEventListener("click", (e) => {
-          checkTodo(e);
-        });
-      });
-    }
   }
 };
 
@@ -57,10 +54,9 @@ if (addTodoModalForm) {
     const todoInput = document.querySelector("#todoInput").value;
     const todoDate = document.querySelector("#todoDate").value;
 
-    if (todoInput === "" || todoDate === "") {
+    if (todoInput.length == 0 || todoDate.length == 0) {
       alert("todo title or date cannot be empty");
     } else {
-      // yeni todo oluşturuldu ve localstorage'a kaydedildi
       const todo = {
         id: Date.now(),
         title: todoInput,
@@ -69,11 +65,9 @@ if (addTodoModalForm) {
       };
 
       const user = users.find((user) => user.username === currentUser);
-      console.log(user, currentUser);
       user.todos.push(todo);
       localStorage.setItem("users", JSON.stringify(users));
 
-      // yeni todo ekrana yazıldı
       const userTodos = user.todos;
       listTodos(userTodos);
 
@@ -94,7 +88,6 @@ function listTodos(todos) {
 
     const month = date.toLocaleString("en-US", { month: "long" });
     const day = date.getDate();
-
     const newTodoListDayItemId = month + day;
     const newTodoListItemId = `todo${todo.id}`;
 
@@ -111,10 +104,10 @@ function listTodos(todos) {
         <div id="${newTodoListItemId}" class="todo-list-item  ${
       todo.checked && "checked"
     }">
-          <button type="button" class="check"><i class="icon-check"></i></button>
+          <button type="button" class="check" onclick="checkTodo(event)"><i class="icon-check"></i></button>
           <input type="text" class="input" value="${todo.title}">
-          <button type="button" class="edit update"><i class="icon-pen"></i></button>
-          <button type="button" class="delete"><i class="icon-trash"></i></button>
+          <button type="button" class="edit" onclick="updateTodo(event)"><i class="icon-pen"></i></button>
+          <button type="button" class="delete" onclick="deleteTodo(event)"><i class="icon-trash"></i></button>
         </div>
     `;
 
@@ -136,17 +129,60 @@ function listTodos(todos) {
   });
 }
 
-function checkTodo(e) {
-  const todoId = e.target.parentElement.id;
-
+function checkTodo(event) {
+  const todoId = event.target.parentElement.id;
   const user = users.find((user) => user.username === currentUser);
   const userTodos = user.todos;
-  console.log(userTodos);
-
   const todo = userTodos.find((todo) => todoId == `todo${todo.id}`);
-  e.target.parentElement.classList.toggle("checked");
 
-  console.log(todo);
+  event.target.parentElement.classList.toggle("checked");
   todo.checked = !todo.checked;
   localStorage.setItem("users", JSON.stringify(users));
+}
+
+function deleteTodo(event) {
+  const todoId = event.target.parentElement.id;
+  const user = users.find((user) => user.username === currentUser);
+  const userTodos = user.todos;
+  const todo = userTodos.find((todo) => todoId == `todo${todo.id}`);
+  const todoContainerId = `#${event.target.parentElement.parentElement.id}`;
+  const todoContainer = document.querySelector(todoContainerId);
+  const todoIndex = userTodos.indexOf(todo);
+
+  userTodos.splice(todoIndex, 1);
+
+  localStorage.setItem("users", JSON.stringify(users));
+
+  event.target.parentElement.remove();
+
+  if (todoContainer.children.length === 1) {
+    todoContainer.remove();
+  }
+}
+
+function updateTodo(event) {
+  const todoId = event.target.parentElement.id;
+  const user = users.find((user) => user.username === currentUser);
+  const userTodos = user.todos;
+  const todo = userTodos.find((todo) => todoId == `todo${todo.id}`);
+  const todoInput = event.target.parentElement.querySelector(".input");
+
+  event.target.parentElement.classList.toggle("editing");
+
+  if (!event.target.clickedOnce) {
+    event.target.classList.add("active");
+
+    if (todo.checked) {
+      todo.checked = false;
+      event.target.parentElement.classList.remove("checked");
+    }
+
+    event.target.clickedOnce = true;
+  } else {
+    todo.title = todoInput.value;
+    localStorage.setItem("users", JSON.stringify(users));
+
+    event.target.classList.remove("active");
+    event.target.clickedOnce = false;
+  }
 }
