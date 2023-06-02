@@ -183,6 +183,7 @@ button {
         place-items: center;
         border: 1px solid $dark;
         font-size: $fs-24;
+        pointer-events: none;
       }
 
       &,
@@ -205,6 +206,16 @@ button {
       & .delete {
         &:hover {
           color: $red;
+        }
+      }
+
+      & .edit {
+        &.editing {
+          & i {
+            &::before {
+              content: "\e901";
+            }
+          }
         }
       }
 

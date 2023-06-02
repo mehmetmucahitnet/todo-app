@@ -201,6 +201,7 @@ button {
   place-items: center;
   border: 1px solid #272727;
   font-size: 24px;
+  pointer-events: none;
 }
 .todo-list-item, .todo-list-item input {
   background-color: #ffffff;
@@ -213,6 +214,9 @@ button {
 }
 .todo-list-item .delete:hover {
   color: #b70000;
+}
+.todo-list-item .edit.editing i::before {
+  content: "\e901";
 }
 .todo-list-item input {
   pointer-events: none;
